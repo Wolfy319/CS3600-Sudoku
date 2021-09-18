@@ -26,8 +26,7 @@ typedef struct indexPro{
    int topRow;
    int bottomRow;
    int leftColumn;
-   int rightColumn;
-      
+   int rightColumn;  
 };
 
 void sudokuMatrix(){
