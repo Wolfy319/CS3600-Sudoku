@@ -37,38 +37,45 @@ void sudokuMatrix(){
 int main(){
 
 /** Column struct intialization **/
-    struct col_1; 
-    struct col_2;
-    struct col_3;
-    struct col_4;
-    struct col_5;
-    struct col_6;
-    struct col_7;
-    struct col_8;
-    struct col_9;
+    struct indexPro col_1; 
+    struct indexPro col_2;
+    struct indexPro col_3;
+    struct indexPro col_4;
+    struct indexPro col_5;
+    struct indexPro col_6;
+    struct indexPro col_7;
+    struct indexPro col_8;
+    struct indexPro col_9;
 
 /** Row struct initialization **/
-    struct row_1;
-    struct row_2;
-    struct row_3;
-    struct row_4;
-    struct row_5;
-    struct row_6;
-    struct row_7;
-    struct row_8;
-    struct row_9;
+    struct indexPro row_1;
+    struct indexPro row_2;
+    struct indexPro row_3;
+    struct indexPro row_4;
+    struct indexPro row_5;
+    struct indexPro row_6;
+    struct indexPro row_7;
+    struct indexPro row_8;
+    struct indexPro row_9;
 
 /** Sub_Grid struct intialization **/
-    struct grid_1;
-    struct grid_2;
-    struct grid_3;
-    struct grid_4;
-    struct grid_5;
-    struct grid_6;
-    struct grid_7;
-    struct grid_8;
-    struct grid_9;
+    struct indexPro grid_1;
+    struct indexPro grid_2;
+    struct indexPro grid_3;
+    struct indexPro grid_4;
+    struct indexPro grid_5;
+    struct indexPro grid_6;
+    struct indexPro grid_7;
+    struct indexPro grid_8;
+    struct indexPro grid_9;
     
+/************************************************************************************************************************************/
+
+    
+
+
+
+
 
     
 
