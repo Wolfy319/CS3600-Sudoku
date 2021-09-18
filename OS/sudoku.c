@@ -70,7 +70,7 @@ int main(){
     struct indexPro grid_9;
     
 /************************************************************************************************************************************/
-
+/** Set Column indexs **/
 /**(0,8,0,0)**/
     col_1.topRow = 0;
     col_1.bottomRow = 8;
@@ -125,7 +125,119 @@ int main(){
     col_9.leftColumn = 8;
     col_9.rightColumn = 8;    
 
+/************************************************************************************************************************************/
 
+/** Set Row indexs **/
+/**(0,0,0,8)**/
+    row_1.topRow = 0;
+    row_1.bottomRow = 0;
+    row_1.leftColumn = 0;
+    row_1.rightColumn = 8;
+
+/**(1,1,0,8)**/
+    row_2.topRow = 1;
+    row_2.bottomRow = 1;
+    row_2.leftColumn = 0;
+    row_2.rightColumn = 8;
+
+/**(2,2,0,8)**/
+    row_3.topRow = 2;
+    row_3.bottomRow = 2;
+    row_3.leftColumn = 0;
+    row_3.rightColumn = 8;
+
+/**(3,3,0,8)**/
+    row_4.topRow = 3;
+    row_4.bottomRow = 3;
+    row_4.leftColumn = 0;
+    row_4.rightColumn = 8;
+
+/**(4,4,0,8)**/
+    row_5.topRow = 4;
+    row_5.bottomRow = 4;
+    row_5.leftColumn = 0;
+    row_5.rightColumn = 8;
+
+/**(5,5,0,8)**/
+    row_6.topRow = 5;
+    row_6.bottomRow = 5;
+    row_6.leftColumn = 0;
+    row_6.rightColumn = 8;
+
+/**(6,6,0,8)**/
+    row_7.topRow = 6;
+    row_7.bottomRow = 6;
+    row_7.leftColumn = 0;
+    row_7.rightColumn = 8;
+
+/**(7,7,0,8)**/
+    row_8.topRow = 7;
+    row_8.bottomRow = 7;
+    row_8.leftColumn = 0;
+    row_8.rightColumn = 8;
+
+/**(8,8,0,8)**/
+    row_9.topRow = 8;
+    row_9.bottomRow = 8;
+    row_9.leftColumn = 0;
+    row_9.rightColumn = 8;    
+
+/************************************************************************************************************************************/
+
+/** Set Sub_Grid indexs **/
+/**(0,2,0,2)**/
+    grid_1.topRow = 0;
+    grid_1.bottomRow = 2;
+    grid_1.leftColumn = 0;
+    grid_1.rightColumn = 2;
+
+/**(0,2,3,5)**/
+    grid_2.topRow = 0;
+    grid_2.bottomRow = 2;
+    grid_2.leftColumn = 3;
+    grid_2.rightColumn = 5;
+
+/**(0,2,6,8)**/
+    grid_3.topRow = 0;
+    grid_3.bottomRow = 2;
+    grid_3.leftColumn = 6;
+    grid_3.rightColumn = 8;
+
+/**(3,5,0,2)**/
+    grid_4.topRow = 3;
+    grid_4.bottomRow = 5;
+    grid_4.leftColumn = 0;
+    grid_4.rightColumn = 2;
+
+/**(3,5,3,5)**/
+    grid_5.topRow = 3;
+    grid_5.bottomRow = 5;
+    grid_5.leftColumn = 3;
+    grid_5.rightColumn = 5;
+
+/**(3,5,6,8)**/
+    grid_6.topRow = 3;
+    grid_6.bottomRow = 5;
+    grid_6.leftColumn = 6;
+    grid_6.rightColumn = 8;
+
+/**(6,8,0,2)**/
+    grid_7.topRow = 6;
+    grid_7.bottomRow = 8;
+    grid_7.leftColumn = 0;
+    grid_7.rightColumn = 2;
+
+/**(6,8,3,5)**/
+    grid_8.topRow = 6;
+    grid_8.bottomRow = 8;
+    grid_8.leftColumn = 3;
+    grid_8.rightColumn = 5;
+
+/**(6,8,6,8)**/
+    grid_9.topRow = 6;
+    grid_9.bottomRow = 8;
+    grid_9.leftColumn = 6;
+    grid_9.rightColumn = 8;
     
 
 }
