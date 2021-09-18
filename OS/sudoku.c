@@ -33,3 +33,43 @@ void sudokuMatrix(){
     FILE *filePointer;
     filePointer = fopen("sudokuPuzzle.txt", "r");
 }
+
+int main(){
+
+/** Column struct intialization **/
+    struct col_1; 
+    struct col_2;
+    struct col_3;
+    struct col_4;
+    struct col_5;
+    struct col_6;
+    struct col_7;
+    struct col_8;
+    struct col_9;
+
+/** Row struct initialization **/
+    struct row_1;
+    struct row_2;
+    struct row_3;
+    struct row_4;
+    struct row_5;
+    struct row_6;
+    struct row_7;
+    struct row_8;
+    struct row_9;
+
+/** Sub_Grid struct intialization **/
+    struct grid_1;
+    struct grid_2;
+    struct grid_3;
+    struct grid_4;
+    struct grid_5;
+    struct grid_6;
+    struct grid_7;
+    struct grid_8;
+    struct grid_9;
+    
+
+    
+
+}
