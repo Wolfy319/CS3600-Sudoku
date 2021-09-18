@@ -1,6 +1,6 @@
 /**
  * A sudoku solution validator
- * Author: Kyle Brown
+ * Author: Kyle Brown & INSERT NAME
  * Date: 9/15/21
  * Version 1.0
  * 
