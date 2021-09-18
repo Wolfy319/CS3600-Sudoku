@@ -32,6 +32,31 @@ typedef struct indexPro{
 void sudokuMatrix(){
     FILE *filePointer;
     filePointer = fopen("sudokuPuzzle.txt", "r");
+    int row;
+    int col;
+    for(row = 0; row < 9; row++){
+        for(col = 0; col < 9; col++){
+            fscanf(filePointer,"%d", &sudokuPuzle[row][col]);
+        }
+
+    }
+    printSudokuPuzzle();
+}
+
+void printSudokuPuzzle(){
+    printf("The Sudoku Puzzle \n");
+    int row;
+    int col;
+    for(row = 0; row < 9; row++){
+        for(col = 0; col < 9; col++){
+            printf("%d ", sudokuPuzle[row][col]);
+            if(col == 8){
+                printf("\n");
+            }
+        }
+        
+    }
+    
 }
 
 int main(){
@@ -239,5 +264,17 @@ int main(){
     grid_9.leftColumn = 6;
     grid_9.rightColumn = 8;
     
+/************************************************************************************************************************************/
+
+sudokuMatrix();
+
+
+
+
+
+
+
+
+
 
 }
