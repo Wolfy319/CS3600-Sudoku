@@ -75,7 +75,7 @@ int compareVals(const void * a, const void * b ){
 /** Checks if the given column has all values
  * first sorts array columnValues using std lib qsort
  * */
-int colCheck(struct indexPro col_){
+void colCheck(struct indexPro col_){
     int colValues[9];
     bool contains = TRUE; 
     
@@ -100,6 +100,28 @@ int colCheck(struct indexPro col_){
     
     
 }
+
+
+void rowCheck(struct indexPro row_){
+    int rowValues[9];
+    bool contains = TRUE;
+
+    for(int col = 0; col < 9; col++){
+        rowValues[col] = sudokuPuzle[row_.topRow][col];
+        printf("%d ", rowValues[col]);
+    }
+
+    for(int u = 0; u < 9; u++){
+        printf("%d ", rowValues[u]);
+    }
+
+    qsort(rowValues, 9, sizeof(int), compareVals);
+    
+    
+}
+
+
+
 
 int main(){
 
@@ -310,7 +332,7 @@ int main(){
 
 sudokuMatrix();
 colCheck(col_1);
-
+rowCheck(row_1);
  
 
 
