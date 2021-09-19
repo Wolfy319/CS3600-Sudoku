@@ -35,6 +35,7 @@ typedef struct indexPro{
    int rightColumn;  
 };
 
+/** Reads the sudokuPuzzle.txt into sudokuPuzzle[][] **/
 void sudokuMatrix(){
     FILE *filePointer;
     filePointer = fopen("sudokuPuzzle.txt", "r");
@@ -49,6 +50,7 @@ void sudokuMatrix(){
     /**printSudokuPuzzle();**/
 }
 
+/** Prints the sudoku puzzle from the array in sudoku format **/
 void printSudokuPuzzle(){
     printf("The Sudoku Puzzle \n");
     int row;
@@ -309,12 +311,12 @@ int main(){
 sudokuMatrix();
 colCheck(col_1);
 
+ 
 
 
 
 
 
 
-
-
+return 0; 
 }
