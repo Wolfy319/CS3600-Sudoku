@@ -11,6 +11,12 @@
 #include<pthread.h>
 
 
+typedef int bool;
+    #define TRUE 1;
+    #define FALSE 2;
+
+
+
 /** Global structures: all threads share this data **/
 int sudokuPuzle[9][9];
 int boolCol[9];
@@ -40,7 +46,7 @@ void sudokuMatrix(){
         }
 
     }
-    printSudokuPuzzle();
+    /**printSudokuPuzzle();**/
 }
 
 void printSudokuPuzzle(){
@@ -56,6 +62,40 @@ void printSudokuPuzzle(){
         }
         
     }
+    
+}
+
+/** Compares to integer values for qsort function **/
+int compareVals(const void * a, const void * b ){
+    return ( *(int*)a - *(int*)b );
+}
+
+/** Checks if the given column has all values
+ * first sorts array columnValues using std lib qsort
+ * */
+int colCheck(struct indexPro col_){
+    int colValues[9];
+    bool contains = TRUE; 
+    
+    for(int row = 0; row < 9; row++){
+        colValues[row] = sudokuPuzle[row][col_.leftColumn]; 
+    }
+
+    qsort(colValues, 9, sizeof(int), compareVals);
+   
+    for(int val = 1; val < 10; val++){
+        for(int mover = 0; mover < 9; mover++){
+            if(colValues[mover] != val){
+                contains = FALSE;
+                break; 
+            }
+        }
+    }
+    boolCol[col_.leftColumn] = contains;
+    printf("bool check: ");
+    printf("%d ", boolCol[0]);
+     
+    
     
 }
 
@@ -267,7 +307,7 @@ int main(){
 /************************************************************************************************************************************/
 
 sudokuMatrix();
-
+colCheck(col_1);
 
 
 
