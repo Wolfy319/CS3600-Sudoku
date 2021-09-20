@@ -23,6 +23,9 @@ int boolCol[9];
 int boolRow[9];
 int boolSubGrid[9];
 
+int tid_row[9];
+int tid_col[9];
+int tid_subGrid[9];
 
 /** A structure for rows and columns to be preocessed by index by each thread
  * Indexes are 0 - 8 
@@ -213,7 +216,7 @@ int main(){
             currentGrid++;
         }
     }
-
+/************************************************************************************************************************************/
     sudokuMatrix();
     pthread_t threads[27];
     void * retvals[27];
