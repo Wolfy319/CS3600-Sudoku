@@ -13,7 +13,7 @@
 
 typedef int bool;
     #define TRUE 1;
-    #define FALSE 0;
+    #define FALSE 2;
 
 
 
@@ -58,6 +58,9 @@ void sudokuMatrix(){
     printSudokuPuzzle();
 }
 
+
+
+
 /** Prints the sudoku puzzle from the array in sudoku format **/
 void printSudokuPuzzle(){
     printf("The Sudoku Puzzle \n");
@@ -70,9 +73,7 @@ void printSudokuPuzzle(){
                 printf("\n");
             }
         }
-        
     }
-    printf("Finished printing puzzle\n");
 }
 
 /** Compares to integer values for qsort function **/
@@ -83,12 +84,21 @@ int compareVals(const void * a, const void * b ){
 /** Checks if the given column has all values
  * first sorts array columnValues using std lib qsort
  * */
-void colCheck(Indexer col_, int i){
+void *colCheck(void *param){
+    ThreadParam *colParams;
+    int i;
+    Indexer col_;
+
+    colParams = (ThreadParam *)param;
+    i = colParams->i;
+    col_ = colParams->subSet;
+
     int colValues[9];
     bool contains = TRUE; 
     
     for(int row = 0; row < 9; row++){
         colValues[row] = sudokuPuzle[row][col_.leftColumn]; 
+        printf("%d  ", colValues[row]);
     }
 
     qsort(colValues, 9, sizeof(int), compareVals);
@@ -102,10 +112,6 @@ void colCheck(Indexer col_, int i){
         val++;
     }
     boolCol[col_.leftColumn] = contains;
-   
-     
-    
-    
 }
 
 
@@ -118,15 +124,11 @@ void *rowCheck(void *param){
     i = rowParams->i;
     row_ = rowParams->subSet;
     
-
     int rowValues[9];
     bool contains = TRUE;
-
-    for(int row = 0; row < 9; row++){
-        rowValues[row] = sudokuPuzle[row_.topRow][row];
+    for(int column = 0; column < 9; column++){
+        rowValues[column] = sudokuPuzle[row_.topRow][column];
     }
-
-    
 
     qsort(rowValues, 9, sizeof(int), compareVals);
     
@@ -138,17 +140,20 @@ void *rowCheck(void *param){
         }
         boolRow[row_.topRow] = contains;
         val++;
-    }
-    
-   
-    
-    
+    }  
 }
 
 /** Checks if the given column has all values
  * first sorts array columnValues using std lib qsort
  * */
-void gridCheck(Indexer grid_, int i){
+void *gridCheck(void *param){
+    ThreadParam *gridParams;
+    int i;
+    Indexer grid_;
+
+    gridParams = (ThreadParam *)param;
+    i = gridParams->i;
+    grid_ = gridParams->subSet;
     int gridValues[9];
     bool contains = TRUE; 
     
@@ -170,8 +175,7 @@ void gridCheck(Indexer grid_, int i){
         }
         val++;
     }
-    boolSubGrid[i] = contains;
-      
+    boolSubGrid[i] = contains;      
 }
 
 
@@ -228,37 +232,44 @@ int main(){
         ThreadParam params;
         params.i = i;
         params.subSet = rows[i];
-        if(pthread_create(rowThreads + i, NULL, *rowCheck, &params)){
-            tid_row[i] = pthread_self(); 
+        if(pthread_create(rowThreads + i, NULL, *rowCheck, &params) == 0){
+            tid_row[i] = rowThreads[i]; 
+
             printf("\n");
-            printf("%d ", boolRow[i]);
         }
-        if(pthread_join(rowThreads[i], NULL)){
-            return 2;
-        }
+        
+        pthread_join(rowThreads[i], NULL);
+            
     }
 
-    
-
-
-
-
-
-   /** void * retvals[27];
-    ThreadParam params;
-    for(int i = 0; i < 9; i++) {
+    for(int i = 0; i < 9; i++){
+        ThreadParam params;
         params.i = i;
-        params.subSet = rows[i];
-        pthread_create(&tid_row[i], NULL, *rowCheck, &params);
-    }**/
+        params.subSet = columns[i];
+        if(pthread_create(colThreads + i, NULL, *colCheck, &params) == 0){
+            tid_col[i] = colThreads[i]; 
 
-    
-    
-  
+            printf("\n");
+        }
+        
+        pthread_join(colThreads[i], NULL);
+            
+    }
 
-   
+    for(int i = 0; i < 9; i++){
+        ThreadParam params;
+        params.i = i;
+        params.subSet = grids[i];
+        if(pthread_create(gridThreads + i, NULL, *gridCheck, &params) == 0){
+            tid_subGrid[i] = gridThreads[i]; 
 
-    
+            printf("\n");
+        }
+        
+        pthread_join(gridThreads[i], NULL);
+            
+    }
+
 
     return 0; 
 }
