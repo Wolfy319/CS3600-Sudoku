@@ -13,17 +13,17 @@
 
 typedef int bool;
     #define TRUE 1;
-    #define FALSE 2;
+    #define FALSE 0;
 
 
 
 /** Global structures: all threads share this data **/
 int sudokuPuzle[9][9];
 int boolCol[9];
-int boolRow[9];
+int boolRow[9] = {0,0,0,0,0,0,0,0,0};
 int boolSubGrid[9];
 
-int tid_row[9];
+pthread_t tid_row[9];
 int tid_col[9];
 int tid_subGrid[9];
 
@@ -72,7 +72,7 @@ void printSudokuPuzzle(){
         }
         
     }
-    
+    printf("Finished printing puzzle\n");
 }
 
 /** Compares to integer values for qsort function **/
@@ -102,8 +102,7 @@ void colCheck(Indexer col_, int i){
         val++;
     }
     boolCol[col_.leftColumn] = contains;
-    printf("bool check: ");
-    printf("%d ", boolCol[i]);
+   
      
     
     
@@ -118,13 +117,13 @@ void *rowCheck(void *param){
     rowParams = (ThreadParam *)param;
     i = rowParams->i;
     row_ = rowParams->subSet;
-    printf("%d ", i);
+    
 
     int rowValues[9];
     bool contains = TRUE;
 
-    for(int col = 0; col < 9; col++){
-        rowValues[col] = sudokuPuzle[row_.topRow][col];
+    for(int row = 0; row < 9; row++){
+        rowValues[row] = sudokuPuzle[row_.topRow][row];
     }
 
     
@@ -137,11 +136,11 @@ void *rowCheck(void *param){
             contains = FALSE;
             break;
         }
+        boolRow[row_.topRow] = contains;
         val++;
     }
-    boolCol[row_.topRow] = contains;
-    // printf("bool check: ");
-    // printf("%d ", boolCol[i]);
+    
+   
     
     
 }
@@ -172,8 +171,7 @@ void gridCheck(Indexer grid_, int i){
         val++;
     }
     boolSubGrid[i] = contains;
-    printf("bool check: ");
-    printf("%d ", boolSubGrid[i]);  
+      
 }
 
 
@@ -222,39 +220,45 @@ int main(){
     
 
 
-    pthread_t threads[27];
+    pthread_t rowThreads[9];
+    pthread_t colThreads[9];
+    pthread_t gridThreads[9];
 
-    for(int q = 0; q < 9; q++){
-        tid_col[q] = &threads[q];
+    for(int i = 0; i < 9; i++){
+        ThreadParam params;
+        params.i = i;
+        params.subSet = rows[i];
+        if(pthread_create(rowThreads + i, NULL, *rowCheck, &params)){
+            tid_row[i] = pthread_self(); 
+            printf("\n");
+            printf("%d ", boolRow[i]);
+        }
+        if(pthread_join(rowThreads[i], NULL)){
+            return 2;
+        }
     }
 
-    for(int q = 10; q < 19; q++){
-        tid_row[q] = &threads[q];
-    }
-
-    for(int q = 20; q < 28; q++){
-        tid_subGrid[q] = &threads[q];
-    }
+    
 
 
 
 
 
-    void * retvals[27];
+   /** void * retvals[27];
     ThreadParam params;
     for(int i = 0; i < 9; i++) {
         params.i = i;
         params.subSet = rows[i];
-        pthread_create(&threads[i], NULL, *rowCheck, &params);
-    }
+        pthread_create(&tid_row[i], NULL, *rowCheck, &params);
+    }**/
 
-    for(int i = 0; i < 9; i++) {
-        pthread_join(threads[i], &retvals[i]);
-    }
     
-    for(int i = 0; i < 9; i++) {
-        printf("%d ", (int)boolCol[i]);
-    }
+    
+  
+
+   
+
+    
 
     return 0; 
 }
