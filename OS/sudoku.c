@@ -35,6 +35,11 @@ typedef struct indexPro{
    int rightColumn;  
 }Indexer;
 
+typedef struct {
+    Indexer subSet;
+    int i;
+}ThreadParam;
+
 /** Reads the sudokuPuzzle.txt into sudokuPuzzle[][] **/
 void sudokuMatrix(){
     FILE *filePointer;
@@ -102,7 +107,16 @@ void colCheck(Indexer col_, int i){
 }
 
 
-void rowCheck(Indexer row_, int i){
+int *rowCheck(void *param){
+    ThreadParam *rowParams;
+    int i;
+    Indexer row_;
+
+    rowParams = (ThreadParam *)param;
+    i = rowParams->i;
+    row_ = rowParams->subSet;
+    printf("%d", i);
+
     int rowValues[9];
     bool contains = TRUE;
 
@@ -122,10 +136,10 @@ void rowCheck(Indexer row_, int i){
         }
         val++;
     }
-    boolCol[row_.leftColumn] = contains;
-    printf("bool check: ");
-    printf("%d ", boolCol[i]);
-    
+    boolCol[row_.topRow] = contains;
+    // printf("bool check: ");
+    // printf("%d ", boolCol[i]);
+    return 0;
     
 }
 
@@ -201,10 +215,21 @@ int main(){
     }
 
     sudokuMatrix();
+    pthread_t threads[27];
+    void * retvals[27];
+    ThreadParam params;
     for(int i = 0; i < 9; i++) {
-        colCheck(columns[i], i);
-        rowCheck(rows[i], i); 
-        gridCheck(grids[i], i);
+        params.i = i;
+        params.subSet = rows[i];
+        pthread_create(&threads[i], NULL, rowCheck, &params);
+    }
+
+    for(int i = 0; i < 9; i++) {
+        pthread_join(threads[i], &retvals[i]);
+    }
+    
+    for(int i = 0; i < 9; i++) {
+        printf("%d ", (int)boolCol[i]);
     }
 
     return 0; 
