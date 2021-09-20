@@ -110,7 +110,7 @@ void colCheck(Indexer col_, int i){
 }
 
 
-int *rowCheck(void *param){
+void *rowCheck(void *param){
     ThreadParam *rowParams;
     int i;
     Indexer row_;
@@ -118,7 +118,7 @@ int *rowCheck(void *param){
     rowParams = (ThreadParam *)param;
     i = rowParams->i;
     row_ = rowParams->subSet;
-    printf("%d", i);
+    printf("%d ", i);
 
     int rowValues[9];
     bool contains = TRUE;
@@ -142,7 +142,7 @@ int *rowCheck(void *param){
     boolCol[row_.topRow] = contains;
     // printf("bool check: ");
     // printf("%d ", boolCol[i]);
-    return 0;
+    
     
 }
 
@@ -218,13 +218,34 @@ int main(){
     }
 /************************************************************************************************************************************/
     sudokuMatrix();
+
+    
+
+
     pthread_t threads[27];
+
+    for(int q = 0; q < 9; q++){
+        tid_col[q] = &threads[q];
+    }
+
+    for(int q = 10; q < 19; q++){
+        tid_row[q] = &threads[q];
+    }
+
+    for(int q = 20; q < 28; q++){
+        tid_subGrid[q] = &threads[q];
+    }
+
+
+
+
+
     void * retvals[27];
     ThreadParam params;
     for(int i = 0; i < 9; i++) {
         params.i = i;
         params.subSet = rows[i];
-        pthread_create(&threads[i], NULL, rowCheck, &params);
+        pthread_create(&threads[i], NULL, *rowCheck, &params);
     }
 
     for(int i = 0; i < 9; i++) {
