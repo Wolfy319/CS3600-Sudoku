@@ -122,7 +122,35 @@ void *colCheck(void *param){
         }
         val++;
     }
-    boolCol[col_.leftColumn] = contains;
+    boolCol[i] = contains;
+    if(boolCol[i] == 1){
+            int tempID = &tid_col[i];
+            printf( "%X ",tempID );
+            printf("Trow: ");
+            printf("%d ", columns[i].topRow);
+            printf("Brow: ");
+            printf("%d ", columns[i].bottomRow);
+            printf("Lcol: ");
+            printf("%d ", columns[i].leftColumn);
+            printf("Rcol: ");
+            printf("%d ", columns[i].rightColumn);
+            printf("valid!");
+            printf("\n"); 
+        }
+    else if (boolCol[i] == 0){
+            int tempID = &tid_col[i];
+            printf( "\b%X ",tempID );
+            printf("Trow: ");
+            printf("%d ", columns[i].topRow);
+            printf("Brow: ");
+            printf("%d ", columns[i].bottomRow);
+            printf("Lcol: ");
+            printf("%d ", columns[i].leftColumn);
+            printf("Rcol: ");
+            printf("%d ", columns[i].rightColumn);
+            printf("invalid!");
+            printf("\n"); 
+    }
 }
 
 
@@ -149,9 +177,38 @@ void *rowCheck(void *param){
             contains = FALSE;
             break;
         }
-        boolRow[row_.topRow] = contains;
         val++;
     }  
+    boolRow[row_.topRow] = contains;
+
+    if(boolRow[i] == 1){
+            int tempID = &tid_row[i];
+            printf( "%X ",tempID );
+            printf("Trow: ");
+            printf("%d ", rows[i].topRow);
+            printf("Brow: ");
+            printf("%d ", rows[i].bottomRow);
+            printf("Lcol: ");
+            printf("%d ", rows[i].leftColumn);
+            printf("Rcol: ");
+            printf("%d ", rows[i].rightColumn);
+            printf("valid!");
+            printf("\n"); 
+        }
+        else if (boolCol[i] == 0){
+            int tempID = &tid_row[i];
+            printf( "\b%X ",tempID );
+            printf("Trow: ");
+            printf("%d ", rows[i].topRow);
+            printf("Brow: ");
+            printf("%d ", rows[i].bottomRow);
+            printf("Lcol: ");
+            printf("%d ", rows[i].leftColumn);
+            printf("Rcol: ");
+            printf("%d ", rows[i].rightColumn);
+            printf("invalid!");
+            printf("\n"); 
+        }
 }
 
 /** Checks if the given column has all values
@@ -186,13 +243,8 @@ void *gridCheck(void *param){
         }
         val++;
     }
-    boolSubGrid[i] = contains;      
-}
-
-void displayGridThreads(){
-    printf("\nSub Grid Thread Validation\n");
-    for(int i = 0; i < 9; i++){
-        if(boolSubGrid[i] == 1){
+    boolSubGrid[i] = contains;    
+    if(boolSubGrid[i] == 1){
             int tempID = &tid_subGrid[i];
             printf( "%X ",tempID );
             printf("Trow: ");
@@ -220,8 +272,6 @@ void displayGridThreads(){
             printf("invalid!");
             printf("\n"); 
         }
-        
-    }
 }
 
 void displayThreadValid(){
@@ -230,7 +280,7 @@ void displayThreadValid(){
     for(int i = 0; i < 9; i++){
         int colTempID = &tid_col[i];
         if(boolCol[i] == 1){
-            printf("\t%X", colTempID);
+            printf("\tColumn %X: ", colTempID);
             printf(" valid!\n");
             
         }
@@ -244,7 +294,7 @@ void displayThreadValid(){
     for(int j = 0; j < 9; j++){
         int rowTempID = &tid_row[j];
         if(boolRow[j] == 1){
-            printf("\t%X", rowTempID);
+            printf("\tRow %X: ", rowTempID);
             printf(" valid!\n");
         }
         else if(boolRow[j] == 0){
@@ -256,7 +306,7 @@ void displayThreadValid(){
     for(int k = 0; k < 9; k++){
         int tempGridID = &tid_subGrid[k];
         if(boolSubGrid[k] == 1){
-            printf("\t%X", tempGridID);
+            printf("\tGrid %X: ", tempGridID);
             printf(" valid!\n");
         }
         else if(boolSubGrid[k] == 0){
@@ -368,7 +418,6 @@ int main(){
 
     
 
-    displayGridThreads();
     displayThreadValid();
     puzzleValid();
 
