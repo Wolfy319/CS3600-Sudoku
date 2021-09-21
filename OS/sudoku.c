@@ -13,7 +13,7 @@
 
 typedef int bool;
     #define TRUE 1;
-    #define FALSE 2;
+    #define FALSE 0;
 
 
 
@@ -22,6 +22,8 @@ int sudokuPuzle[9][9];
 int boolCol[9] = {0,0,0,0,0,0,0,0,0};
 int boolRow[9] = {0,0,0,0,0,0,0,0,0};
 int boolSubGrid[9];
+
+
 
 pthread_t tid_row[9];
 pthread_t tid_col[9];
@@ -43,6 +45,15 @@ typedef struct {
     int i;
 }ThreadParam;
 
+/** Column struct intialization **/
+    Indexer columns[9];
+
+/** Row struct initialization **/
+    Indexer rows[9];
+
+/** Sub_Grid struct intialization **/
+    Indexer grids[9];
+
 /** Reads the sudokuPuzzle.txt into sudokuPuzzle[][] **/
 void sudokuMatrix(){
     FILE *filePointer;
@@ -55,7 +66,7 @@ void sudokuMatrix(){
         }
 
     }
-    printSudokuPuzzle();
+     printSudokuPuzzle();
 }
 
 
@@ -74,6 +85,7 @@ void printSudokuPuzzle(){
             }
         }
     }
+    printf("\n");
 }
 
 /** Compares to integer values for qsort function **/
@@ -177,19 +189,109 @@ void *gridCheck(void *param){
     boolSubGrid[i] = contains;      
 }
 
+void displayGridThreads(){
+    printf("\nSub Grid Thread Validation\n");
+    for(int i = 0; i < 9; i++){
+        if(boolSubGrid[i] == 1){
+            int tempID = &tid_subGrid[i];
+            printf( "%X ",tempID );
+            printf("Trow: ");
+            printf("%d ", grids[i].topRow);
+            printf("Brow: ");
+            printf("%d ", grids[i].bottomRow);
+            printf("Lcol: ");
+            printf("%d ", grids[i].leftColumn);
+            printf("Rcol: ");
+            printf("%d ", grids[i].rightColumn);
+            printf("valid!");
+            printf("\n"); 
+        }
+        else if (boolSubGrid[i] == 0){
+            int tempID = &tid_subGrid[i];
+            printf( "\b%X ",tempID );
+            printf("Trow: ");
+            printf("%d ", grids[i].topRow);
+            printf("Brow: ");
+            printf("%d ", grids[i].bottomRow);
+            printf("Lcol: ");
+            printf("%d ", grids[i].leftColumn);
+            printf("Rcol: ");
+            printf("%d ", grids[i].rightColumn);
+            printf("invalid!");
+            printf("\n"); 
+        }
+        
+    }
+}
+
+void displayThreadValid(){
+    printf("\nColumn, Row, Grid Thread Validation\n");
+    printf("Columns: \n");
+    for(int i = 0; i < 9; i++){
+        int colTempID = &tid_col[i];
+        if(boolCol[i] == 1){
+            printf("\t%X", colTempID);
+            printf(" valid!\n");
+            
+        }
+        else if (boolCol[i] == 0){
+            printf("\t%X", colTempID);
+            printf(" invalid!\n");
+            
+        }  
+    }
+    printf("\nRows:\n");
+    for(int j = 0; j < 9; j++){
+        int rowTempID = &tid_row[j];
+        if(boolRow[j] == 1){
+            printf("\t%X", rowTempID);
+            printf(" valid!\n");
+        }
+        else if(boolRow[j] == 0){
+            printf("\t%X", rowTempID);
+            printf(" invalid!\n");
+        }
+    }
+    printf("\nGrids:\n");
+    for(int k = 0; k < 0; k++){
+        int tempGridID = &tid_subGrid[k];
+        if(boolSubGrid[k] == 1){
+            printf("\t%X", tempGridID);
+            printf(" valid!\n");
+        }
+        else if(boolSubGrid[k] == 0){
+            printf("\t%X", tempGridID);
+            printf(" invalid!\n");
+        }
+    }
+}
+
+
+void puzzleValid(){
+    for(int v = 0; v < 9;){
+        int row = boolRow[v];
+        int col = boolCol[v];
+        int grid = boolSubGrid[v];
+        if(row & col & grid == 1){
+            v++;
+            if(v == 8){
+                printf("\nSudoku Puzzle: valid!");
+            }
+        }
+        else{
+            printf("\nSudoku Puzzle: invalid!");
+            break;
+            
+        }
+    }
+}
+
 
 
 
 int main(){
 
-/** Column struct intialization **/
-    Indexer columns[9];
 
-/** Row struct initialization **/
-    Indexer rows[9];
-
-/** Sub_Grid struct intialization **/
-    Indexer grids[9];
     
 /************************************************************************************************************************************/
 /** Set Column indexs **/
@@ -263,6 +365,12 @@ int main(){
             
     }
 
+
+    
+
+    displayGridThreads();
+    displayThreadValid();
+    puzzleValid();
 
     return 0; 
 }
