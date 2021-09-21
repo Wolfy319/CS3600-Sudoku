@@ -1,6 +1,6 @@
 /**
  * A sudoku solution validator
- * Author: Kyle Brown & INSERT NAME
+ * Author: Kyle Brown & Wolfy Fiorini
  * Date: 9/15/21
  * Version 1.0
  * 
@@ -253,7 +253,7 @@ void displayThreadValid(){
         }
     }
     printf("\nGrids:\n");
-    for(int k = 0; k < 0; k++){
+    for(int k = 0; k < 9; k++){
         int tempGridID = &tid_subGrid[k];
         if(boolSubGrid[k] == 1){
             printf("\t%X", tempGridID);
