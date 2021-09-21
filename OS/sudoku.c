@@ -19,13 +19,13 @@ typedef int bool;
 
 /** Global structures: all threads share this data **/
 int sudokuPuzle[9][9];
-int boolCol[9];
+int boolCol[9] = {0,0,0,0,0,0,0,0,0};
 int boolRow[9] = {0,0,0,0,0,0,0,0,0};
 int boolSubGrid[9];
 
 pthread_t tid_row[9];
-int tid_col[9];
-int tid_subGrid[9];
+pthread_t tid_col[9];
+pthread_t tid_subGrid[9];
 
 /** A structure for rows and columns to be preocessed by index by each thread
  * Indexes are 0 - 8 
@@ -98,7 +98,6 @@ void *colCheck(void *param){
     
     for(int row = 0; row < 9; row++){
         colValues[row] = sudokuPuzle[row][col_.leftColumn]; 
-        printf("%d  ", colValues[row]);
     }
 
     qsort(colValues, 9, sizeof(int), compareVals);
@@ -234,8 +233,6 @@ int main(){
         params.subSet = rows[i];
         if(pthread_create(rowThreads + i, NULL, *rowCheck, &params) == 0){
             tid_row[i] = rowThreads[i]; 
-
-            printf("\n");
         }
         
         pthread_join(rowThreads[i], NULL);
@@ -248,8 +245,6 @@ int main(){
         params.subSet = columns[i];
         if(pthread_create(colThreads + i, NULL, *colCheck, &params) == 0){
             tid_col[i] = colThreads[i]; 
-
-            printf("\n");
         }
         
         pthread_join(colThreads[i], NULL);
@@ -262,8 +257,6 @@ int main(){
         params.subSet = grids[i];
         if(pthread_create(gridThreads + i, NULL, *gridCheck, &params) == 0){
             tid_subGrid[i] = gridThreads[i]; 
-
-            printf("\n");
         }
         
         pthread_join(gridThreads[i], NULL);
